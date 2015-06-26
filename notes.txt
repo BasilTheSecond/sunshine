@@ -1,0 +1,234 @@
+1) How to export external repository to GitHub
+LINKS:
+https://help.github.com/articles/importing-a-git-repository-using-the-command-line/
+
+- Create a new repository at GitHub. You'll import your external Git repository to this new repository. 
+
+https://github.com/BasilTheSecond/sunshine.git
+
+- Make a "bare" clone of the repository using the external clone URL. This creates a full copy of the data, 
+but without a working directory for editing files, and ensures a clean, fresh export of all the old data:
+
+$ git clone --bare https://github.com/udacity/Sunshine-Version-2.git
+Cloning into bare repository 'Sunshine-Version-2.git'...
+remote: Counting objects: 1429, done.
+remote: Total 1429 (delta 0), reused 0 (delta 0), pack-reused 1428
+Receiving objects: 100% (1429/1429), 2.25 MiB | 2.17 MiB/s, done.
+Resolving deltas: 100% (400/400), done.
+Checking connectivity... done.
+
+- Push the locally cloned repository to GitHub using the "mirror" option, which ensures that all references, 
+such as branches and tags, are copied to the imported repository:
+
+
+$ ls
+Sunshine-Version-2.git
+
+$ cd Sunshine-Version-2.git/
+
+$ ls Sunshine-Version-2.git/
+HEAD  config  description  hooks  info  objects  packed-refs  refs
+
+$ git push --mirror https://github.com/BasilTheSecond/sunshine.git
+Username for 'https://github.com': BasilTheSecond
+Password for 'https://BasilTheSecond@github.com':
+Counting objects: 1429, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (543/543), done.
+Writing objects: 100% (1429/1429), 2.25 MiB | 515.00 KiB/s, done.
+Total 1429 (delta 400), reused 1429 (delta 400)
+To https://github.com/BasilTheSecond/sunshine.git
+ * [new branch]      1.01_hello_world -> 1.01_hello_world
+ * [new branch]      1.02_add_list_item_forecast_layout -> 1.02_add_list_item_fo
+recast_layout
+ * [new branch]      1.03_update_fragment_layout -> 1.03_update_fragment_layout
+ * [new branch]      1.04_add_dummy_data -> 1.04_add_dummy_data
+ * [new branch]      1.05_create_arrayadapter -> 1.05_create_arrayadapter
+ * [new branch]      1.06_attach_adapter -> 1.06_attach_adapter
+ * [new branch]      2.01_add_network_code -> 2.01_add_network_code
+ * [new branch]      2.02_refactor_forecast_fragment -> 2.02_refactor_forecast_f
+ragment
+ * [new branch]      2.03_add_refresh_xml -> 2.03_add_refresh_xml
+ * [new branch]      2.04_inflate_menu -> 2.04_inflate_menu
+ * [new branch]      2.05_execute_fetchweathertask -> 2.05_execute_fetchweathert
+ask
+ * [new branch]      2.06_add_internet_permissions -> 2.06_add_internet_permissi
+ons
+ * [new branch]      2.07_build_url_with_params -> 2.07_build_url_with_params
+ * [new branch]      2.08_json_parsing -> 2.08_json_parsing
+ * [new branch]      2.09_display_data -> 2.09_display_data
+ * [new branch]      3.00_remove_logging -> 3.00_remove_logging
+ * [new branch]      3.01_add_toast -> 3.01_add_toast
+ * [new branch]      3.02_create_detail_activity -> 3.02_create_detail_activity
+ * [new branch]      3.03_launch_detail_activity -> 3.03_launch_detail_activity
+ * [new branch]      3.04_populate_detail_text -> 3.04_populate_detail_text
+ * [new branch]      3.05_add_settingsactivity -> 3.05_add_settingsactivity
+ * [new branch]      3.06_launch_settings -> 3.06_launch_settings
+ * [new branch]      3.07_add_locations_setting -> 3.07_add_locations_setting
+ * [new branch]      3.08_inflate_settingsactivity -> 3.08_inflate_settingsactiv
+ity
+ * [new branch]      3.09_location_from_prefs -> 3.09_location_from_prefs
+ * [new branch]      3.10_refactor_fetch_weather -> 3.10_refactor_fetch_weather
+ * [new branch]      3.11_add_units_setting -> 3.11_add_units_setting
+ * [new branch]      3.12_add_map_intent -> 3.12_add_map_intent
+ * [new branch]      3.13_add_share_action_provider -> 3.13_add_share_action_pro
+vider
+ * [new branch]      4.01_life_cycle -> 4.01_life_cycle
+ * [new branch]      4.02_start_code_for_lesson_4 -> 4.02_start_code_for_lesson_
+4
+ * [new branch]      4.03_define_contract_constants -> 4.03_define_contract_cons
+tants
+ * [new branch]      4.04_location_database -> 4.04_location_database
+ * [new branch]      4.05_test_location_table -> 4.05_test_location_table
+ * [new branch]      4.06_test_weather_table -> 4.06_test_weather_table
+ * [new branch]      4.07_start_code_content_provider -> 4.07_start_code_content
+_provider
+ * [new branch]      4.08_uribuilder_weather_with_location -> 4.08_uribuilder_we
+ather_with_location
+ * [new branch]      4.09_write_uri_matcher -> 4.09_write_uri_matcher
+ * [new branch]      4.10_register_contentprovider -> 4.10_register_contentprovi
+der
+ * [new branch]      4.11_gettype -> 4.11_gettype
+ * [new branch]      4.12_query -> 4.12_query
+ * [new branch]      4.13_insert -> 4.13_insert
+ * [new branch]      4.14_update_delete -> 4.14_update_delete
+ * [new branch]      4.15_refactor_fetchweather -> 4.15_refactor_fetchweather
+ * [new branch]      4.16_use_contentprovider_inserts -> 4.16_use_contentprovide
+r_inserts
+ * [new branch]      4.17_bulkinserts_with_contentprovider -> 4.17_bulkinserts_w
+ith_contentprovider
+ * [new branch]      4.18_cursor_adapter -> 4.18_cursor_adapter
+ * [new branch]      4.19_loaders -> 4.19_loaders
+ * [new branch]      4.20_projections -> 4.20_projections
+ * [new branch]      4.21_details_view -> 4.21_details_view
+ * [new branch]      4.22_fix_details_view -> 4.22_fix_details_view
+ * [new branch]      4.23_fix_settings -> 4.23_fix_settings
+ * [new branch]      5.01_build_list_item -> 5.01_build_list_item
+ * [new branch]      5.02_build_today_item -> 5.02_build_today_item
+ * [new branch]      5.03_update_forecast_adapter -> 5.03_update_forecast_adapte
+r
+ * [new branch]      5.04_two_item_view_types -> 5.04_two_item_view_types
+ * [new branch]      5.05_viewholder -> 5.05_viewholder
+ * [new branch]      5.06_formatting_strings -> 5.06_formatting_strings
+ * [new branch]      5.07_details_screen -> 5.07_details_screen
+ * [new branch]      5.08_images -> 5.08_images
+ * [new branch]      5.09_two_pane_ui -> 5.09_two_pane_ui
+ * [new branch]      5.10_selected_item -> 5.10_selected_item
+ * [new branch]      5.11_activated_item -> 5.11_activated_item
+ * [new branch]      5.12_scroll_position -> 5.12_scroll_position
+ * [new branch]      5.13_alternative_detail_layout -> 5.13_alternative_detail_l
+ayout
+ * [new branch]      5.14_today_item_tablet -> 5.14_today_item_tablet
+ * [new branch]      5.15_action_bar -> 5.15_action_bar
+ * [new branch]      5.16_settings_action_bar -> 5.16_settings_action_bar
+ * [new branch]      5.17_redlines_list_item -> 5.17_redlines_list_item
+ * [new branch]      5.18_redlines_finish -> 5.18_redlines_finish
+ * [new branch]      5.19_accessibility -> 5.19_accessibility
+ * [new branch]      6.01_services -> 6.01_services
+ * [new branch]      6.02_alarms -> 6.02_alarms
+ * [new branch]      6.03_implement_sync_adapter -> 6.03_implement_sync_adapter
+ * [new branch]      6.04_finish_sync_adapter -> 6.04_finish_sync_adapter
+ * [new branch]      6.05_scheduled_sync -> 6.05_scheduled_sync
+ * [new branch]      6.06_notifications_quiz -> 6.06_notifications_quiz
+ * [new branch]      6.07_notifications_answer -> 6.07_notifications_answer
+ * [new branch]      6.08_turn_off_notifications -> 6.08_turn_off_notifications
+ * [new branch]      6.09_delete_old_data -> 6.09_delete_old_data
+ * [new branch]      6.10_update_map_intent -> 6.10_update_map_intent
+ * [new branch]      initial_commit -> initial_commit
+ * [new branch]      lesson_4_content_provider_starter_code -> lesson_4_content_
+provider_starter_code
+ * [new branch]      lesson_4_starter_code -> lesson_4_starter_code
+ * [new branch]      lesson_6_sync_adapter_starter_code -> lesson_6_sync_adapter
+_starter_code
+ * [new branch]      sunshine_master -> sunshine_master
+
+- Remove the temporary local repository.
+
+$ cd ..
+$ ls
+Sunshine-Version-2.git
+$ rm -rf Sunshine-Version-2.git/
+
+2) Create a User Interface
+
+- In the MainActivity there is a PlaceholderFragment which was generated by the template that was used to generate
+the project
+
+In the fragment_main.xml there is the following line:
+
+tools:context=".MainActivity$PlaceholderFragment"
+
+This line specifies the name of the fragment (inner class of MainActivity class)
+
+- List view contains other views that are used to display sets of data
+
+One element in the list view will be a text view to represent weather data
+
+- We want to define a list item layout
+
+This is done in the layout folder inside the project. Root will be the TextView:
+
+file name: list_item_forcast
+root: TextView
+
+- We want to have ScrollView which has LinearLayout to display (scrool) Views (TextView)
+
+To do that we need ListView
+
+Create ListView with n items plus one above and one below the screen
+
+If we scroll up we create one and add at the bottom just in time. But adding them will take memory. We need to
+remove them from the top.
+
+We want to add ListView to the fragment layout xml
+
+NOTE: We use layout_width/hight to be match_parent to make it full screen
+
+- We now want to create fake data to populate it and see how it looks like
+
+We do this in MainActivity.java and go to the FrameActivity PlaceholderFragment class
+
+We create ArrayList<String> list of strings and populate it with fake data.
+
+- We now need to populate the ListView
+
+a) We crate Adapter and pass it array of raw data
+b) For each array element we tell Adapter how to create a View
+c) When ListView is created it asks Adapter how how many Views to display and Adapter tells him
+d) When ListView starts populating Views it goes one by one (by index) and asks Adapter to provide the view at index x
+e) Adapter repsonds because it knows how to create the View for each index
+
+// Create Adapter that will create View(s) from the raw data for the ListView
+// Adapter needs the following parameters:
+// - context (from getActivity())
+// - ID of ListView layout ( R.layout.listview_forecast, this is xml layout file)
+// - ID ID of View layoyt (R.id.list_item_forecast_textview, this is element in layout file)
+// - list of data (weekForecast)
+ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.list_item_forecast,
+                    R.id.list_item_forecast_textview, weekForecast);
+
+We need to get ListView object
+
+This is done by traversing xml file where this view is defined. xml is represented by the parse tree where each node
+has an id. These id's are in R.id.??? When the java app is running, there is an equivalent tree of views created so it needs
+to be parsed to get to the required view.
+
+In java code there is a method in the Activity class that knows how to parse the view tree:
+
+View v = (View)getActivity().findViewById(R.id.???);
+
+We can do a more optimized search by extracting its parent and then descending to it from the parent
+
+View p = (View)getActivity().findViewById(R.id.parent);
+View v = (View)p.findViewById(R.id.child);
+
+// Set Adapter on ListView
+v.setAdapter(adapter);
+
+
+
+
+
+
+
+
