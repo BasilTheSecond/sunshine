@@ -258,6 +258,13 @@ LINKS:
 http://developer.android.com/training/basics/network-ops/connecting.html
 http://android-developers.blogspot.ca/2011/09/androids-http-clients.html
 
+I'm getting android.os.NetworkOnMainThreadException
+
+The workaround for this issue is described here:
+
+http://stackoverflow.com/questions/6343166/android-os-networkonmainthreadexception 
+
+After this change I was able to retrieve the query via HTTP GET command as one big string
 
 - Read response from the input stream
 - Clean up and log any errors
