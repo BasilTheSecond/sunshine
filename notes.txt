@@ -266,6 +266,39 @@ http://stackoverflow.com/questions/6343166/android-os-networkonmainthreadexcepti
 
 After this change I was able to retrieve the query via HTTP GET command as one big string
 
+What class does Android use simplify background thread creation/running and synchronization with the UI thread?
+
+It's AsyncTask. 
+
+LINKS:
+http://developer.android.com/guide/components/processes-and-threads.html
+
+Normally, when the Android application is running, all the code is running in the same (main) application thread.
+However, you can arrange that more processes or threads are launched from the running application. Processes that are
+launched will continue running when the application terminates. Threads will terminate when their process terminates.
+
+By component the following is meant: activity, service, receiver, provider
+
+These components running in the same process means that they are in their own thread
+
+When the application is launched, the system creates a thread called "main". This thread is in charge with UI elements. Different components
+of the Android app have callbacks and these callbacks are all called from the main UI thread. Therefore these callback (normally) don't run
+in parallel.
+
+Because everything happens as event callbacks from the single main thread, if any callback takes a lot of time to complete it will effectively
+block other callback from running impacting performance.
+
+Android system has a main thread blocking detection called ANR (app not responding) which presents a message. The user may kill the app from that
+dialogue.
+
+Android UI classes are NOT thread safe so they MUST be used from a single dedicated thread. Therefore:
+
+- Access UI from a single dedicated (main) thread
+- Do not block the main thread as it's used for taking care of the UI
+
+
+
+
 - Read response from the input stream
 - Clean up and log any errors
 
