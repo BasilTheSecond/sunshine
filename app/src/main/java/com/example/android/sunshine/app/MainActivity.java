@@ -129,24 +129,21 @@ public class MainActivity extends ActionBarActivity {
             HttpURLConnection urlConnection = null;
             BufferedReader reader = null;
 
-            // Will contain the raw JSON response as a string.
-            //String forecastJsonStr = null;
+            // Will contain the raw JSON response
             List<String> forecastJsonStr = new ArrayList<String>();
             try {
                 // Construct the URL for the OpenWeatherMap query
                 // Possible parameters are avaiable at OWM's forecast API page, at
                 // http://openweathermap.org/API#forecast
                 URL url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?q=94043&mode=json&units=metric&cnt=7");
-                //URL url = new URL("http://www.google.com");
 
                 // Create the request to OpenWeatherMap, and open the connection
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
                 urlConnection.connect();
 
-                // Read the input stream into a String
+                // Read the input stream into the string list, line by line
                 InputStream inputStream = urlConnection.getInputStream();
-                //StringBuffer buffer = new StringBuffer();
                 if (inputStream == null) {
                     // Nothing to do.
                     return null;
@@ -159,29 +156,17 @@ public class MainActivity extends ActionBarActivity {
                     if (line == null) {
                         break;
                     }
-                    // Since it's JSON, adding a newline isn't necessary (it won't affect parsing)
-                    // But it does make debugging a *lot* easier if you print out the completed
-                    // buffer for debugging.
-                    //buffer.append(line + '\n');
-                    //buffer.append(line);
                     forecastJsonStr.add(line);
                 }
-
-                //if (buffer.length() == 0) {
-                    // Stream was empty.  No point in parsing.
-                //    return null;
-                //}
                 if (forecastJsonStr.size() == 0) {
                     // Stream was empty.  No point in parsing.
                     return null;
                 }
 
-                //forecastJsonStr = buffer.toString();
-
-                Log.d("PlaceholderFragment", "forecastJsonStr.size()=" + forecastJsonStr.size());
-                for (String line : forecastJsonStr) {
-                    Log.d("PlaceholderFragment", line);
-                }
+//                Log.d("PlaceholderFragment", "forecastJsonStr.size()=" + forecastJsonStr.size());
+//                for (String line : forecastJsonStr) {
+//                    Log.d("PlaceholderFragment", line);
+//                }
 
             } catch (IOException e) {
                 Log.e("PlaceholderFragment", "Error ", e);
