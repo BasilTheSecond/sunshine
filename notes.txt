@@ -226,7 +226,41 @@ View v = (View)p.findViewById(R.id.child);
 v.setAdapter(adapter);
 
 
+3) Weater forecast API
 
+- Every API call starts with:
+http://api.openweathermap.org/data/2.5/forecast/daily?
+
+- Parameters are separated by ?
+
+- Parameters:
+- 1 week of data: cnt=7
+- JSON : mode=json
+- postal code 94043 : zip={zip code},{country code}
+- metric : units=metric
+- city, country : q={zip code},{country code}
+- latitude, longiture : lat={lat}&lon={lon}
+- city id : id={City ID}
+
+
+http://api.openweathermap.org/data/2.5/forecast/daily?mode=json&units=metric&cnt=7&zip=94043,us
+http://api.openweathermap.org/data/2.5/forecast/daily?mode=json&units=metric&cnt=7&q=94043,usa
+
+4) Do HTTP query
+
+- Make HTTP request
+There are 2 client classes:
+HttpUrlConnection (recommended) OR HttpClient
+
+NOTE: Both support http, https, send, receive, uploads, downloads, IPv6 and connection pooling
+
+LINKS:
+http://developer.android.com/training/basics/network-ops/connecting.html
+http://android-developers.blogspot.ca/2011/09/androids-http-clients.html
+
+
+- Read response from the input stream
+- Clean up and log any errors
 
 
 
