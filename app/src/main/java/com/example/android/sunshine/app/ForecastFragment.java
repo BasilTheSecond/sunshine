@@ -21,9 +21,9 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.List;
 
-public class PlaceholderFragment extends Fragment {
+public class ForecastFragment extends Fragment {
 
-    public PlaceholderFragment() {
+    public ForecastFragment() {
     }
 
     @Override
@@ -69,10 +69,10 @@ public class PlaceholderFragment extends Fragment {
                 getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo == null || !networkInfo.isConnected()) {
-            Log.e("PlaceholderFragment", "No network connection");
+            Log.e("ForecastFragment", "No network connection");
             return null;
         }
-        Log.i("PlaceholderFragment", "Has network connection!!!");
+        Log.i("ForecastFragment", "Has network connection!!!");
 
         // Allow networking I/O to be done on the main thread
         // NOTE:
@@ -120,13 +120,13 @@ public class PlaceholderFragment extends Fragment {
                 return null;
             }
 
-//                Log.d("PlaceholderFragment", "forecastJsonStr.size()=" + forecastJsonStr.size());
+//                Log.d("ForecastFragment", "forecastJsonStr.size()=" + forecastJsonStr.size());
 //                for (String line : forecastJsonStr) {
-//                    Log.d("PlaceholderFragment", line);
+//                    Log.d("ForecastFragment", line);
 //                }
 
         } catch (IOException e) {
-            Log.e("PlaceholderFragment", "Error ", e);
+            Log.e("ForecastFragment", "Error ", e);
             // If the code didn't successfully get the weather data, there's no point in attemping
             // to parse it.
             return null;
@@ -138,7 +138,7 @@ public class PlaceholderFragment extends Fragment {
                 try {
                     reader.close();
                 } catch (final IOException e) {
-                    Log.e("PlaceholderFragment", "Error closing stream", e);
+                    Log.e("ForecastFragment", "Error closing stream", e);
                 }
             }
         }

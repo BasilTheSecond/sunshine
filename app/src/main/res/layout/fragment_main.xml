@@ -6,7 +6,7 @@
     android:paddingRight="64dp"
     android:paddingTop="16dp"
     android:paddingBottom="16dp"
-    tools:context="com.example.android.sunshine.app.MainActivity$PlaceholderFragment">
+    tools:context="com.example.android.sunshine.app.ForecastFragment">
 
     <ListView
         android:layout_width="match_parent"
