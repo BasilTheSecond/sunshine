@@ -85,10 +85,10 @@ ForecastFragment extends Fragment
 	}
 
 	public class
-	FetchWeatherTask extends AsyncTask<String, Void, Void>
+	FetchWeatherTask extends AsyncTask<Void, Void, Void>
 	{
 		@Override
-		protected Void doInBackground(String... params)
+		protected Void doInBackground(Void... params)
 		{
 			// These two need to be declared outside the try/catch
 			// so that they can be closed in the finally block.
