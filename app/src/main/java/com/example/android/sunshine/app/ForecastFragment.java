@@ -26,8 +26,6 @@ import java.util.List;
 public class
 ForecastFragment extends Fragment
 {
-	public ForecastFragment() {}
-
 	@Override
 	public View
 	onCreateView(LayoutInflater inflater,
@@ -69,17 +67,7 @@ ForecastFragment extends Fragment
 		// Set Adapter on ListView
 		listView.setAdapter(forecastAdapter);
 
-		// Check that there is a network connection before attempting
-		// to issue http GET request (to read data)
-		ConnectivityManager connMgr = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-		if (networkInfo == null || !networkInfo.isConnected()) {
-			Log.e("ForecastFragment", "No network connection");
-			return null;
-		}
-		Log.i("ForecastFragment", "Has network connection, launching network task!!!");
-
-		new FetchWeatherTask();
+		new FetchWeatherTask().execute();
 
 		return rootView;
 	}
@@ -87,9 +75,21 @@ ForecastFragment extends Fragment
 	public class
 	FetchWeatherTask extends AsyncTask<Void, Void, Void>
 	{
+		private final String LOG_TAG = FetchWeatherTask.class.getSimpleName();
+
 		@Override
 		protected Void doInBackground(Void... params)
 		{
+			// Check that there is a network connection before attempting
+			// to issue http GET request (to read data)
+			ConnectivityManager connMgr = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+			NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+			if (networkInfo == null || !networkInfo.isConnected()) {
+				Log.e(LOG_TAG, "No network connection");
+				return null;
+			}
+			Log.i(LOG_TAG, "Has network connection, launching network task!!!");
+
 			// These two need to be declared outside the try/catch
 			// so that they can be closed in the finally block.
 			HttpURLConnection urlConnection = null;
@@ -128,14 +128,12 @@ ForecastFragment extends Fragment
 					// Stream was empty.  No point in parsing.
 					return null;
 				}
-
-//                Log.d("ForecastFragment", "forecastJsonStr.size()=" + forecastJsonStr.size());
+//                Log.d(LOG_TAG, "forecastJsonStr.size()=" + forecastJsonStr.size());
 //                for (String line : forecastJsonStr) {
-//                    Log.d("ForecastFragment", line);
+//                    Log.d(LOG_TAG, line);
 //                }
-
 			} catch (IOException e) {
-				Log.e("ForecastFragment", "Error ", e);
+				Log.e(LOG_TAG, "Error ", e);
 				// If the code didn't successfully get the weather data, there's no point in attemping
 				// to parse it.
 				return null;
@@ -147,7 +145,7 @@ ForecastFragment extends Fragment
 					try {
 						reader.close();
 					} catch (final IOException e) {
-						Log.e("ForecastFragment", "Error closing stream", e);
+						Log.e(LOG_TAG, "Error closing stream", e);
 					}
 				}
 			}
