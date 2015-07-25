@@ -6,10 +6,11 @@
     android:paddingRight="64dp"
     android:paddingTop="16dp"
     android:paddingBottom="16dp"
-    tools:context="com.example.android.sunshine.app.ForecastFragment">
+    tools:context=".ForecastFragment">
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/listview_forecast" />
+
 </FrameLayout>
