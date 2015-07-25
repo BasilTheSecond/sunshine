@@ -72,8 +72,6 @@ ForecastFragment extends Fragment
 		// Set Adapter on ListView
 		listView.setAdapter(forecastAdapter);
 
-		new FetchWeatherTask().execute();
-
 		return rootView;
 	}
 
@@ -99,7 +97,7 @@ ForecastFragment extends Fragment
 	{
 		switch (item.getItemId()) {
 			case R.id.action_refresh:
-				Toast.makeText(getActivity(), R.string.action_refresh, Toast.LENGTH_SHORT).show();
+				new FetchWeatherTask().execute();
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);
@@ -162,14 +160,12 @@ ForecastFragment extends Fragment
 					// Stream was empty.  No point in parsing.
 					return null;
 				}
-//                Log.d(LOG_TAG, "forecastJsonStr.size()=" + forecastJsonStr.size());
-//                for (String line : forecastJsonStr) {
-//                    Log.d(LOG_TAG, line);
-//                }
+				Log.d(LOG_TAG, "forecastJsonStr.size()=" + forecastJsonStr.size());
+				for (String line : forecastJsonStr) {
+						Log.d(LOG_TAG, line);
+				}
 			} catch (IOException e) {
 				Log.e(LOG_TAG, "Error ", e);
-				// If the code didn't successfully get the weather data, there's no point in attemping
-				// to parse it.
 				return null;
 			} finally {
 				if (urlConnection != null) {
