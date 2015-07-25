@@ -160,7 +160,7 @@ ForecastFragment extends Fragment
 					// Stream was empty.  No point in parsing.
 					return null;
 				}
-				Log.d(LOG_TAG, "forecastJsonStr.size()=" + forecastJsonStr.size());
+				Log.d(LOG_TAG, "forecastJsonStr: " + forecastJsonStr);
 				for (String line : forecastJsonStr) {
 						Log.d(LOG_TAG, line);
 				}
