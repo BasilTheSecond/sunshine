@@ -38,10 +38,10 @@ MainActivity extends ActionBarActivity
 	{
 		switch (item.getItemId()) {
 			case R.id.action_settings:
-				Toast.makeText(this, R.string.action_settings, Toast.LENGTH_LONG).show();
+				Toast.makeText(this, R.string.action_settings, Toast.LENGTH_SHORT).show();
 				return true;
-			case R.id.help:
-				Toast.makeText(this, R.string.help, Toast.LENGTH_LONG).show();
+			case R.id.action_help:
+				Toast.makeText(this, R.string.action_help, Toast.LENGTH_SHORT).show();
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);
