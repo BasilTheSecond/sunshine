@@ -128,7 +128,7 @@ ForecastFragment extends Fragment
 			BufferedReader reader = null;
 
 			// Will contain the raw JSON response
-			List<String> forecastJsonStr = new ArrayList<String>();
+			String forecastJsonStr = null;
 			try {
 				// Construct the URL for the OpenWeatherMap query
 				// Possible parameters are avaiable at OWM's forecast API page, at
@@ -147,23 +147,22 @@ ForecastFragment extends Fragment
 					return null;
 				}
 				reader = new BufferedReader(new InputStreamReader(inputStream));
+				StringBuffer buffer = new StringBuffer();
 
-				//String line;
 				while (true) {
 					String line = reader.readLine();
-					if (line == null) {
-						break;
-					}
-					forecastJsonStr.add(line);
+					if (line == null) break;
+					// Since it's JSON, adding a newline isn't necessary (it won't affect parsing)
+					// But it does make debugging a *lot* easier if you print out the completed
+					// buffer for debugging.
+					buffer.append(line + '\n');
 				}
-				if (forecastJsonStr.size() == 0) {
+				if (buffer.length() == 0) {
 					// Stream was empty.  No point in parsing.
 					return null;
 				}
+				forecastJsonStr = buffer.toString();
 				Log.d(LOG_TAG, "forecastJsonStr: " + forecastJsonStr);
-				for (String line : forecastJsonStr) {
-						Log.d(LOG_TAG, line);
-				}
 			} catch (IOException e) {
 				Log.e(LOG_TAG, "Error ", e);
 				return null;
