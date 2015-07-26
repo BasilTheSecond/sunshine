@@ -10,6 +10,8 @@ public class WeatherDataParser
 	final static String OWM_TEMPERATURE = "temp";
 	final static String OWM_MAX = "max";
 	final static String OWM_MIN = "min";
+	final static String OWM_WEATHER = "weather";
+	final static String OWM_DESCRIPTION = "main";
 	/**
 	 * Given a string of the form returned by the api call:
 	 * http://api.openweathermap.org/data/2.5/forecast/daily?q=94043&mode=json&units=metric&cnt=7
@@ -40,6 +42,18 @@ public class WeatherDataParser
 		return temperatureInfo.getDouble(OWM_MIN);
 	}
 
+	private static String
+	getDescriptionForDay(String weatherJsonStr,
+													int dayIndex)
+		throws JSONException
+	{
+		JSONObject weather = new JSONObject(weatherJsonStr);
+		JSONArray days = weather.getJSONArray(OWM_LIST);
+		JSONObject dayInfo = days.getJSONObject(dayIndex);
+		JSONObject weatherInfo = dayInfo.getJSONArray(OWM_WEATHER).getJSONObject(0);
+		return weatherInfo.getString(OWM_DESCRIPTION);
+	}
+
 	public static String[]
 	getResultsString(	String weatherJsonStr,
 										int numberOfDays)
@@ -49,7 +63,7 @@ public class WeatherDataParser
 
 		for (int i = 0; i < numberOfDays; i++) {
 			String day = "Mod, Jun 1";
-			String description = "Clear";
+			String description = getDescriptionForDay(weatherJsonStr, i);
 			long low = Math.round(getMinTemperatureForDay(weatherJsonStr, i));
 			long high = Math.round(getMaxTemperatureForDay(weatherJsonStr, i));
 			resultsString[i] = day + " - " + description + " - " + high + "/" + low;
