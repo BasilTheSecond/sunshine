@@ -10,12 +10,12 @@ import java.util.GregorianCalendar;
 
 public class WeatherDataParser
 {
-	final static String OWM_LIST = "list";
-	final static String OWM_TEMPERATURE = "temp";
-	final static String OWM_MAX = "max";
-	final static String OWM_MIN = "min";
-	final static String OWM_WEATHER = "weather";
-	final static String OWM_DESCRIPTION = "main";
+	private final static String OWM_LIST = "list";
+	private final static String OWM_TEMPERATURE = "temp";
+	private final static String OWM_MAX = "max";
+	private final static String OWM_MIN = "min";
+	private final static String OWM_WEATHER = "weather";
+	private final static String OWM_DESCRIPTION = "main";
 
 	private static JSONArray
 	getDaysInfo(String weatherJsonStr)

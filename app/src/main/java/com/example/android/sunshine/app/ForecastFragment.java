@@ -111,6 +111,12 @@ ForecastFragment extends Fragment
 	FetchWeatherTask extends AsyncTask<String, Void, String[]>
 	{
 		private final String LOG_TAG = FetchWeatherTask.class.getSimpleName();
+		private final String BASE_URL = "http://api.openweathermap.org/data/2.5/forecast/daily";
+		private final String QUERY_KEY = "q";
+		private final String MODE_KEY = "mode";
+		private final String UNITS_KEY = "units";
+		private final String COUNT_KEY = "cnt";
+		private final int numberOfDays = 7;
 
 		@Override
 		protected String[] doInBackground(String... params)
@@ -130,15 +136,9 @@ ForecastFragment extends Fragment
 			HttpURLConnection urlConnection = null;
 			BufferedReader reader = null;
 
-			// Will contain parsed JSON response
-			String[] resultsString = null;
+			// Will contain raw JSON response
+			String forecastJsonStr = null;
 			try {
-				final String BASE_URL = "http://api.openweathermap.org/data/2.5/forecast/daily";
-				final String QUERY_KEY = "q";
-				final String MODE_KEY = "mode";
-				final String UNITS_KEY = "units";
-				final String COUNT_KEY = "cnt";
-				final int numberOfDays = 7;
 				// Construct the URL for the OpenWeatherMap query
 				// Possible parameters are avaiable at OWM's forecast API page, at
 				// http://openweathermap.org/API#forecast
@@ -177,19 +177,10 @@ ForecastFragment extends Fragment
 					// Stream was empty.  No point in parsing.
 					return null;
 				}
-
-				// Will contain the raw JSON response
-				String forecastJsonStr = buffer.toString();
-				try {
-					resultsString = WeatherDataParser.getResultsString(forecastJsonStr, numberOfDays);
-					//for (String line : resultsString) {
-					//	Log.i(LOG_TAG, line);
-					//}
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
+				forecastJsonStr = buffer.toString();
 			} catch (IOException e) {
 				Log.e(LOG_TAG, "Error ", e);
+				return null;
 			} finally {
 				if (urlConnection != null) {
 					urlConnection.disconnect();
@@ -202,7 +193,16 @@ ForecastFragment extends Fragment
 					}
 				}
 			}
-			return resultsString;
+			try {
+				String[] resultsString = WeatherDataParser.getResultsString(forecastJsonStr, numberOfDays);
+				for (String line : resultsString) {
+					Log.i(LOG_TAG, line);
+				}
+				return resultsString;
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			return null;
 		}
 	}
 }
