@@ -4,6 +4,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 public class WeatherDataParser
 {
 	final static String OWM_LIST = "list";
@@ -12,6 +16,7 @@ public class WeatherDataParser
 	final static String OWM_MIN = "min";
 	final static String OWM_WEATHER = "weather";
 	final static String OWM_DESCRIPTION = "main";
+
 	/**
 	 * Given a string of the form returned by the api call:
 	 * http://api.openweathermap.org/data/2.5/forecast/daily?q=94043&mode=json&units=metric&cnt=7
@@ -33,7 +38,7 @@ public class WeatherDataParser
 	private static double
 	getMinTemperatureForDay(String weatherJsonStr,
 													int dayIndex)
-		throws JSONException
+													throws JSONException
 	{
 		JSONObject weather = new JSONObject(weatherJsonStr);
 		JSONArray days = weather.getJSONArray(OWM_LIST);
@@ -43,9 +48,9 @@ public class WeatherDataParser
 	}
 
 	private static String
-	getDescriptionForDay(String weatherJsonStr,
-													int dayIndex)
-		throws JSONException
+	getDescriptionForDay(	String weatherJsonStr,
+												int dayIndex)
+												throws JSONException
 	{
 		JSONObject weather = new JSONObject(weatherJsonStr);
 		JSONArray days = weather.getJSONArray(OWM_LIST);
@@ -54,21 +59,30 @@ public class WeatherDataParser
 		return weatherInfo.getString(OWM_DESCRIPTION);
 	}
 
+	private static String
+	getLocalDate(	int dayIndex)
+								throws JSONException
+	{
+		GregorianCalendar gc = new GregorianCalendar();
+		gc.add(GregorianCalendar.DATE, dayIndex);
+		Date time = gc.getTime();
+		SimpleDateFormat shortenedDateFormat = new SimpleDateFormat("EEE MMM dd");
+		return shortenedDateFormat.format(time);
+	}
+
 	public static String[]
 	getResultsString(	String weatherJsonStr,
 										int numberOfDays)
 										throws JSONException
 	{
 		String[] resultsString = new String[numberOfDays];
-
 		for (int i = 0; i < numberOfDays; i++) {
-			String day = "Mod, Jun 1";
+			String day = getLocalDate(i);
 			String description = getDescriptionForDay(weatherJsonStr, i);
 			long low = Math.round(getMinTemperatureForDay(weatherJsonStr, i));
 			long high = Math.round(getMaxTemperatureForDay(weatherJsonStr, i));
 			resultsString[i] = day + " - " + description + " - " + high + "/" + low;
 		}
-
 		return resultsString;
 	}
 }

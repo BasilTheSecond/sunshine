@@ -177,8 +177,8 @@ ForecastFragment extends Fragment
 					// Stream was empty.  No point in parsing.
 					return null;
 				}
+
 				forecastJsonStr = buffer.toString();
-				Log.d(LOG_TAG, "forecastJsonStr: " + forecastJsonStr);
 
 				try {
 					String[] resultsString = WeatherDataParser.getResultsString(forecastJsonStr, numberOfDays);
