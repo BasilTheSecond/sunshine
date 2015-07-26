@@ -108,12 +108,12 @@ ForecastFragment extends Fragment
 	}
 
 	public class
-	FetchWeatherTask extends AsyncTask<String, Void, Void>
+	FetchWeatherTask extends AsyncTask<String, Void, String[]>
 	{
 		private final String LOG_TAG = FetchWeatherTask.class.getSimpleName();
 
 		@Override
-		protected Void doInBackground(String... params)
+		protected String[] doInBackground(String... params)
 		{
 			// Check that there is a network connection before attempting
 			// to issue http GET request (to read data)
@@ -130,8 +130,8 @@ ForecastFragment extends Fragment
 			HttpURLConnection urlConnection = null;
 			BufferedReader reader = null;
 
-			// Will contain the raw JSON response
-			String forecastJsonStr = null;
+			// Will contain parsed JSON response
+			String[] resultsString = null;
 			try {
 				final String BASE_URL = "http://api.openweathermap.org/data/2.5/forecast/daily";
 				final String QUERY_KEY = "q";
@@ -178,20 +178,18 @@ ForecastFragment extends Fragment
 					return null;
 				}
 
-				forecastJsonStr = buffer.toString();
-
+				// Will contain the raw JSON response
+				String forecastJsonStr = buffer.toString();
 				try {
-					String[] resultsString = WeatherDataParser.getResultsString(forecastJsonStr, numberOfDays);
-					for (String line : resultsString) {
-						Log.i(LOG_TAG, line);
-					}
+					resultsString = WeatherDataParser.getResultsString(forecastJsonStr, numberOfDays);
+					//for (String line : resultsString) {
+					//	Log.i(LOG_TAG, line);
+					//}
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
-
 			} catch (IOException e) {
 				Log.e(LOG_TAG, "Error ", e);
-				return null;
 			} finally {
 				if (urlConnection != null) {
 					urlConnection.disconnect();
@@ -204,7 +202,7 @@ ForecastFragment extends Fragment
 					}
 				}
 			}
-			return null;
+			return resultsString;
 		}
 	}
 }
