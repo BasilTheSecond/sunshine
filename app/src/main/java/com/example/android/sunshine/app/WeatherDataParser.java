@@ -17,10 +17,10 @@ public class WeatherDataParser
 													int dayIndex)
 													throws JSONException
 	{
-		JSONObject jsonObject = new JSONObject(weatherJsonStr);
-		JSONArray jsonArray = jsonObject.getJSONArray("list");
-		jsonObject = jsonArray.getJSONObject(dayIndex);
-		jsonObject = jsonObject.getJSONObject("temp");
-		return jsonObject.getDouble("max");
+		JSONObject weather = new JSONObject(weatherJsonStr);
+		JSONArray days = weather.getJSONArray("list");
+		JSONObject dayInfo = days.getJSONObject(dayIndex);
+		JSONObject temperatureInfo = dayInfo.getJSONObject("temp");
+		return temperatureInfo.getDouble("max");
 	}
 }
