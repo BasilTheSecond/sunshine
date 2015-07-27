@@ -16,14 +16,25 @@ public class WeatherDataParser
 	private final static String OWM_MIN = "min";
 	private final static String OWM_WEATHER = "weather";
 	private final static String OWM_DESCRIPTION = "main";
+	private final static String OWM_CITY = "city";
+	private final static String OWM_CITY_NAME = "name";
 
 	private static JSONArray
 	getDaysInfo(String weatherJsonStr)
 							throws JSONException
 	{
 		JSONObject weather = new JSONObject(weatherJsonStr);
-		JSONArray days = weather.getJSONArray(OWM_LIST);
-		return days;
+		JSONArray daysInfo = weather.getJSONArray(OWM_LIST);
+		return daysInfo;
+	}
+
+	private static JSONObject
+	getCityInfo(String weatherJsonStr)
+		throws JSONException
+	{
+		JSONObject weather = new JSONObject(weatherJsonStr);
+		JSONObject cityInfo = weather.getJSONObject(OWM_CITY);
+		return cityInfo;
 	}
 
 	/**
@@ -69,6 +80,14 @@ public class WeatherDataParser
 		Date time = gregorianCalendar.getTime();
 		String day = shortenedDateFormat.format(time);
 		return day;
+	}
+
+	public static String
+	getCityName(String weatherJsonStr)
+							throws JSONException
+	{
+		String cityName = getCityInfo(weatherJsonStr).getString(OWM_CITY_NAME);
+		return cityName;
 	}
 
 	public static String[]
