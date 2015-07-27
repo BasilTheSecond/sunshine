@@ -34,6 +34,8 @@ import java.util.List;
 public class
 ForecastFragment extends Fragment
 {
+	ArrayAdapter<String> mForecastAdapter;
+
 	@Override
 	public View
 	onCreateView(LayoutInflater inflater,
@@ -62,18 +64,17 @@ ForecastFragment extends Fragment
 		// - ID of ListView layout ( R.layout.listview_forecast, this is xml layout file)
 		// - ID ID of View layoyt (R.id.list_item_forecast_textview, this is element in layout file)
 		// - list of data (weekForecast)
-		ArrayAdapter<String> forecastAdapter = new ArrayAdapter<String>(	getActivity(),
-																	R.layout.list_item_forecast,
-																	R.id.list_item_forecast_textview,
-																	weekForecast);
-
+		mForecastAdapter = new ArrayAdapter<String>(getActivity(),
+																								R.layout.list_item_forecast,
+																								R.id.list_item_forecast_textview,
+																								weekForecast);
 		// Bind this adapter to the ListView (R.id.listview_forecast)
 		// To get the View object we use findViewById(R.id.listview_forecast) method of the Fragment class
 		// NOTE: rootView is obtained when the fragment is inflated into the View
 		ListView listView = (ListView) rootView.findViewById(R.id.listview_forecast);
 
 		// Set Adapter on ListView
-		listView.setAdapter(forecastAdapter);
+		listView.setAdapter(mForecastAdapter);
 
 		return rootView;
 	}
@@ -195,14 +196,24 @@ ForecastFragment extends Fragment
 			}
 			try {
 				String[] resultsString = WeatherDataParser.getResultsString(forecastJsonStr, numberOfDays);
-				for (String line : resultsString) {
-					Log.i(LOG_TAG, line);
-				}
+//				for (String line : resultsString) {
+//					Log.i(LOG_TAG, line);
+//				}
 				return resultsString;
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 			return null;
+		}
+
+		@Override
+		protected void onPostExecute(String[] resultsString)
+		{
+			mForecastAdapter.clear();
+			for (String s: resultsString) {
+				mForecastAdapter.add(s);
+			}
+			mForecastAdapter.notifyDataSetChanged();
 		}
 	}
 }
