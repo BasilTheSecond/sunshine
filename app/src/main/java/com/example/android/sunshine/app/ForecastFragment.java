@@ -78,7 +78,8 @@ ForecastFragment extends Fragment
 	{
 		switch (item.getItemId()) {
 			case R.id.action_refresh:
-				new FetchWeatherTask().execute("94043,us");
+				//new FetchWeatherTask().execute("94043,us"); // Mountain View, CA, USA
+				new FetchWeatherTask().execute("m9a1g7,ca"); // Etobicoke, ON, CA
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);
