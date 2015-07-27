@@ -186,11 +186,12 @@ ForecastFragment extends Fragment
 		@Override
 		protected void onPostExecute(String[] resultsString)
 		{
-			mForecastAdapter.clear();
-			for (String s: resultsString) {
-				mForecastAdapter.add(s);
+			if (resultsString != null) {
+				mForecastAdapter.clear();
+				for (String dayForecastString: resultsString) {
+					mForecastAdapter.add(dayForecastString);
+				}
 			}
-			mForecastAdapter.notifyDataSetChanged();
 		}
 	}
 }
