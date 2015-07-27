@@ -188,9 +188,7 @@ ForecastFragment extends Fragment
 		{
 			if (resultsString != null) {
 				mForecastAdapter.clear();
-				for (String dayForecastString: resultsString) {
-					mForecastAdapter.add(dayForecastString);
-				}
+				mForecastAdapter.addAll(resultsString);
 			}
 		}
 	}
